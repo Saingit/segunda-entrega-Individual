@@ -22,11 +22,11 @@ hbs.registerHelper('crear', (id, nombre, descripcion, valor, modalidad, intensid
 		listaCursos.push(curso);
 		console.log(listaCursos);
 		guardar();
-		Console.log("Registro ralizado con exito");
+		console.log("Registro ralizado con exito");
 	
 	}
 	else
-	console.log("Verifica, Ya existe un curso con este id.");
+	   console.log("Verifica, Ya existe un curso con este id.");
 
 
 });
