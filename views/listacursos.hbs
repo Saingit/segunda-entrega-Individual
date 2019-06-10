@@ -1,0 +1,41 @@
+{{>header}}
+<div class="container ">
+    <div class="row align-items-center justify-content-center ">
+         <div class="col-lg-12 col-12 text-center text-white p-4 bg-dark">
+            <h2>Ver cursos como Coodinador</h2>
+        </div>
+        <div class="col-lg-12 col-12">
+             <p id="mensaje"></p>
+            {{{listarC}}}
+        </div>
+        <div class="col-lg-12 col-12">
+              <form action="estado" method="post">
+            <div class="form-row">
+               
+                <div class="col-md-12 mb-3">
+
+                    <select  class="form-control" name="estado" id="exampleFormControlSelect1">
+                        <option>Disponible</option>
+                        <option>Cerrado</option>
+                    </select><label for="" class="text-white">Estado</label>
+                </div>
+            </div>
+            <button class="btn btn-warning" type="submit">Enviar</button>
+        </form>
+        </div>
+    </div>
+</div>
+
+<div class="container ">
+    <div class="row align-items-center justify-content-center">
+         <div class="col-lg-12 col-12">
+            <h2>Ver cursos como interesado</h2>
+        </div>
+      
+            {{{listarCI}}}
+        
+    </div>
+</div>
+
+
+{{>footer}}

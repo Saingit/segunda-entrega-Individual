@@ -1,0 +1,58 @@
+{{>header}}
+
+<div class="container bg-dark ">
+    <h3 class="mb-5 text-white">Registro de Cursos</h3>
+    <div class="row d-flex justify-content-center ">
+         <div class="col-lg-12 mb-5">
+                <form action="crearcursos" method="post">
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <input class="form-control" type="text" name="id" placeholder="Id de Curso" required>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <input type="text" class="form-control" name="nombre" placeholder="Nombre de Curso">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <input type="text" class="form-control" name="descripcion" placeholder="Descripcion" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <input type="text" class="form-control" name="valor" placeholder="Valor" required>
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                    <select  class="form-control" name="modalidad" id="exampleFormControlSelect1">
+                        <option>Presencial</option>
+                        <option>SemiPresencial</option>
+                        <option>Virtual</option>
+                    </select><label for="" class="text-white">Modalidad</label>
+                </div>
+
+                <div class="col-md-4 mb-3">
+
+                   <select  class="form-control" name="intensidad" id="exampleFormControlSelect1">
+                        <option>32 Horas</option>
+                        <option>20 horas</option>
+                        <option>30 horas</option>
+                        <option>40 horas</option>
+                        <option>80 horas</option>
+                    </select><label for="" class="text-white">Intensidad</label>
+                </div>
+
+                
+            </div>
+
+
+
+            <button class="btn btn-warning" type="submit" onclick="">Enviar</button>
+        </form>
+
+        </div>
+   
+    </div>
+  
+</div>
+
+
+{{>footer}}

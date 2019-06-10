@@ -1,0 +1,21 @@
+{{>header}}
+
+<div class="row mt-3">
+    <div class="col-lg-6 col-12 mx-auto mt-5 mb-5">
+       <form action="usuarios" method="post" class="text-center border border-light p-5">
+            <p class="h4 mb-4">Inscribirme en el Curso</p>
+            {{!-- nombre --}}
+            <input name='nombre' type="text" id="defaultRegisterFormFirstName" class="form-control mb-4" placeholder="Nombre" required>
+            <!-- E-mail -->
+            <input name='email' type="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail" required>
+            <!-- Password -->
+            <input name='cedula' type="text" id="defaultRegisterFormPassword" class="form-control mb-4" placeholder="Documento de identidad" aria-describedby="defaultRegisterFormPasswordHelpBlock" required>
+            <!-- Phone number -->
+            <input name='telefono' type="text" id="defaultRegisterPhonePassword" class="form-control" placeholder="Telefono" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
+            <!-- Sign up button -->
+            <button class="btn btn-info mt-4 btn-block" type="submit">Registrar</button>
+        </form>
+    </div>
+</div>
+
+{{>footer}}
