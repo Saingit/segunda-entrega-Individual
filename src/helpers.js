@@ -1,9 +1,11 @@
 const hbs = require('hbs');
 const express = require('express');
 const app = express();
+const path=require('path');
 //file system
 const fs = require('fs');
-
+const listadoCursos = path.join(__dirname,'../listaCursos.json');
+const listaUsuarios = path.join(__dirname,'../listaUsuarios.json');
 listaCursos = [];
 
 hbs.registerHelper('crear', (id, nombre, descripcion, valor, modalidad, intensidad) => {
@@ -18,42 +20,50 @@ hbs.registerHelper('crear', (id, nombre, descripcion, valor, modalidad, intensid
 		estado: "disponible"
 	};
 	let replica = listaCursos.find(ced => ced.idC == id)
+	let mensaje="";
 	if (!replica) {
 		listaCursos.push(curso);
 		console.log(listaCursos);
 		guardar();
-		console.log("Registro ralizado con exito");
+	mensaje=`Registro ralizado con exito`
+	return mensaje;
+		// console.log("Registro ralizado con exito");
 	
 	}
 	else
-	   console.log("Verifica, Ya existe un curso con este id.");
+	mensaje=`<h2>Verifica, Ya existe un curso con este id.</h2>`
+	return mensaje;
+	//    console.log("Verifica, Ya existe un curso con este id.");
 
 
 });
 
 
 
+
+
+
 const listar = () => {
 	try {
-	listaCursos = require('../listaCursos.json');
+	listaCursos = require(listadoCursos);
 	} catch (error) {
 		listaCursos = [];
 	}
 }
 
-	const guardar = () => {
-		//guardamos el array en el archivo json
-		let datos = JSON.stringify(listaCursos);
-		fs.writeFile('../listaCursos.json', datos, (err) => {
-			if (err) throw (err);
-			console.log("Registro ralizado con exito");
-		 
-		})
-	}
+const guardar = () => {
+	//guardamos el array en el archivo json
+	let datos = JSON.stringify(listaCursos);
+	fs.writeFile(listadoCursos, datos, (err) => {
+		if (err) throw (err);
+		console.log("Registro ralizado con exito");
+
+	})
+}
 
 
 hbs.registerHelper('listarC', () => {
-    listaCursos = require('../listaCursos.json')
+    listaCursos = require(listadoCursos)
     let texto = `<table class="table table-dark table-striped">\
 	<thead>\
 	  <tr>\
@@ -85,33 +95,85 @@ hbs.registerHelper('listarC', () => {
 });
 
 
-hbs.registerHelper('estadoC',(estado)=>{
 
-		listar()
-		let estadoC = listaEstudiantes.find(buscar => buscar.esta == cerrado)
-			if(!estadoC){
-				console.log(`El curso se encuentra cerrado`);
-			}else{
+
+hbs.registerHelper('cerrarCurso', (_id) => {
+    listaCursos = require(listadoCursos);
+    //listaCursos= JSON.parse(fs.readFileSync('../listadoCursos.json'));
+    let texto = `<select>`
+
+    listaCursos.forEach(id => {
+        if (id.estado == 'disponible') {
+            texto = ` ${texto}   <option value="name">${id.nombre}</option>`
+
+        }
+    });
+    texto = `${texto}</select> `
+    return texto;
+
+    // if(_idCurso!='')
+    // {
+    //     registro=listaCursos.find(l=>l.id===_idCurso);
+    //     if(registro)
+    //        registro.estado='Cerrado';
+    //     else
+    //      console.log('Curso no encontrado');
+
+    //      guardar();
+
+    // }else
+    //     return 'El id del curso es obligatorio';
+});
+
+
+// hbs.registerHelper('cerrarCurso',(_idCurso)=>{
+//     listaCursos= require(listadoCursos);
+//     //listaCursos= JSON.parse(fs.readFileSync('../listadoCursos.json'));
+//     if(_idCurso ==`disponible`)
+//     {
+//         registro=listaCursos.find(l=>l.id===_idCurso);
+//         if(registro)
+//            registro.estado='cerrado';
+//         else
+//          console.log('Curso no encontrado');
+        
+//          guardar();
+        
+//     }else
+//         return 'El id del curso es obligatorio';
+// });
+
+
+// hbs.registerHelper('estadoC',(estado)=>{
+
+// 		listar()
+// 		let estadoC = listaEstudiantes.find(buscar => buscar.esta == cerrado)
+// 			if(!estadoC){
+// 				console.log(`El curso se encuentra cerrado`);
+// 			}else{
 				
-				stadoC[estado] = cerrado
-				guardar()
-			}
+// 				stadoC[estado] = cerrado
+// 				guardar()
+// 			}
 				
 	
 	
-}
+// }
 
-)
+// )
 
 hbs.registerHelper('listarCI', () => {
-	listaCursos = require('../listaCursos.json')
+	listaCursos = require(listadoCursos)
 	
-	let texto = `  <div class="col-lg-10 col-12">\
+	let texto = `<div class="col-lg-6 col-12">\ 
 	<div class="accordion mb-3" id="accordionExample">`
 	
 	   i=1
     listaCursos.forEach(curso => {
-		texto = `${texto}<div class="card">\
+		if(curso.estado=='disponible'){
+
+		texto = `${texto} 
+	<div class="card">\
 		<div class="card-header" id="heading${i}">
 		<h2 class="mb-0">\
 		  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse${i}" aria-expanded="true" aria-controls="collapse${i}">
@@ -130,7 +192,7 @@ hbs.registerHelper('listarCI', () => {
 		</div>\
 		</div>
 	  `
-	  i = i+ 1
+	  i = i+ 1}
 	});	
 	texto=`${texto}
 	</div>\ </div> `
@@ -171,7 +233,7 @@ hbs.registerHelper('crearU', ( nombre, email, cedula,  telefono, curso) => {
 
 
 hbs.registerHelper('listarU', () => {
-	listarUsuarios = require('../listaUsuarios.json')
+	listarUsuarios = require(listaUsuarios)
 	let texto = `<table class="table table-sm table-dark">\
 <thead>\
 	<tr>\
@@ -205,7 +267,7 @@ hbs.registerHelper('listarU', () => {
 
 const listarU = () => {
 	try {
-		listarUsuarios = require('../listaUsuarios.json');
+		listarUsuarios = require(listaUsuarios);
 	} catch (error) {
 		listarUsuarios = [];
 	}
@@ -214,7 +276,7 @@ const listarU = () => {
 	const guardarU = () => {
 		//guardamos el array en el archivo json
 		let datos = JSON.stringify(listarUsuarios);
-		fs.writeFile('listaUsuarios.json', datos, (err) => {
+		fs.writeFile(listaUsuarios, datos, (err) => {
 			if (err) throw (err);
 			console.log(`Archivo de cursos creado con exito`);
 		})
